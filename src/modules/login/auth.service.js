@@ -22,14 +22,14 @@ export class AuthService {
       if (!userfilter) {
         throw {
           error: true,
-          statusCode: 404,
+          statusCode: 401,
           msg: "Credendiales erroneas",
         };
       }
       if (userfilter.password !== password) {
         throw {
           error: true,
-          statusCode: 404,
+          statusCode: 401,
           msg: "Credendiales erroneas",
         };
       }
