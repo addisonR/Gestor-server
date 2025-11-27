@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { Config } from "./config.js";
 import authRouter from "../modules/login/auth.route.js";
 import { validateJson } from "../middleware/validateJson.js";
@@ -17,6 +18,7 @@ export class Server {
   middleware() {
     this.app.use(express.json());
     this.app.use(validateJson);
+    this.app.use(cors());
   }
 
   routes() {
