@@ -1,6 +1,7 @@
 import express from "express";
 import { Config } from "./config.js";
 import authRouter from "../modules/login/auth.route.js";
+import { validateJson } from "../middleware/validateJson.js";
 
 export class Server {
   config;
@@ -15,6 +16,7 @@ export class Server {
 
   middleware() {
     this.app.use(express.json());
+    this.app.use(validateJson);
   }
 
   routes() {

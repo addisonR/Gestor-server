@@ -1,9 +1,9 @@
 import express from "express";
 import { AuthController } from "./auth.controller.js";
+import { validateRequestLogin } from "../../middleware/validateRequest.js";
 
 const route = express.Router();
-const controller = new AuthController();
 
-route.post("/login", controller.login);
+route.post("/login", validateRequestLogin, AuthController.login);
 
 export default route;
