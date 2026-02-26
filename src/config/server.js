@@ -3,6 +3,7 @@ import cors from "cors";
 import { Config } from "./config.js";
 import authRouter from "../modules/login/auth.route.js";
 import { validateJson } from "../middleware/validateJson.js";
+import cookieParser from "cookie-parser";
 
 export class Server {
   config;
@@ -17,8 +18,14 @@ export class Server {
 
   middleware() {
     this.app.use(express.json());
+    this.app.use(
+      cors({
+        origin: "http://localhost:5173", // Reemplaza por tu URL exacta de Vite
+        credentials: true,
+      }),
+    );
+    this.app.use(cookieParser());
     this.app.use(validateJson);
-    this.app.use(cors());
   }
 
   routes() {

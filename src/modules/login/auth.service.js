@@ -14,9 +14,10 @@ const userDB = [
     role: "user",
   },
 ];
+import jwt from "jsonwebtoken";
 
 export class AuthService {
-  static loginService(email, password) {
+  static loginService(email, pass) {
     try {
       const userfilter = userDB.find((user) => user.email === email);
       if (!userfilter) {
@@ -26,21 +27,19 @@ export class AuthService {
           msg: "Credendiales erroneas",
         };
       }
-      if (userfilter.password !== password) {
+      if (userfilter.password !== pass) {
         throw {
           error: true,
           statusCode: 401,
           msg: "Credendiales erroneas",
         };
       }
-      const userData = {
-        id: userfilter.id,
-        name: userfilter.name,
-        email: userfilter.email,
-        role: userfilter.role,
-        token: "as54d5.6asd1asd61as8das1d.6a48w4q84sef4df9",
-      };
-      return userData;
+      const { password, ...userData } = userfilter;
+      const token = jwt.sign(userData, process.env.JWT_SECRET, {
+        expiresIn: "1h",
+      });
+
+      return { userData, token };
     } catch (error) {
       throw error;
     }
